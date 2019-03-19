@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.qiaopc.myapplication.Main2Activity">
+
+    <Button
+        android:id="@+id/btn_120SG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_120SG" />
+
+    <Button
+        android:id="@+id/btn_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_ll" />
+
+    <Button
+        android:id="@+id/btn_surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_surface_view" />
+
+    <Button
+        android:id="@+id/btn_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_recycler_view" />
+
+
+    <Button
+        android:id="@+id/btn_anim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_anim" />
+
+    <Button
+        android:id="@+id/btn_gpu_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_gpu_image" />
+
+    <Button
+        android:id="@+id/btn_bessel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_bessel" />
+
+    <Button
+        android:id="@+id/btn_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_camera" />
+
+    <Button
+        android:id="@+id/btn_camera2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_camera2" />
+    <Button
+        android:id="@+id/btn_openGLES"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_openGLES" />
+</LinearLayout>
