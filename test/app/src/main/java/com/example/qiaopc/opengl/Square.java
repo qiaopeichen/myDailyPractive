@@ -35,7 +35,7 @@ public class Square {
 
         // initialize byte buffer for the draw list
         ByteBuffer dlb = ByteBuffer.allocateDirect(
-                // (# of coordinate values * 2 bytes per short)
+                // (# of coordinate values * 2 bytes per short)  一个short占2个字节
                 drawOrder.length * 2);
         dlb.order(ByteOrder.nativeOrder());
         drawListBuffer = dlb.asShortBuffer();

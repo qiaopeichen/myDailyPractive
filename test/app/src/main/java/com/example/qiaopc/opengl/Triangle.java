@@ -23,6 +23,11 @@ public class Triangle {
 //                    "  gl_Position = vPosition;" +
 //                    "}";
 
+    // 绘制图形，因为需要提供很多细节的图形渲染管线，所以绘制图形前至少需要一个顶点着色器来绘制形状和一个片段着色器的颜色，形状。
+    // 这些着色器必须被编译，然后加入到一个OpenGL ES程序，然后将其用于绘制形状。
+
+    // 顶点着色器（Vertex Shader）顶点着色器是GPU上运行的小程序，由名字可以知道，通过它来处理顶点，他用于渲染图形顶点的OpenGL ES图形代码。
+    // 顶点着色器可用来修改图形的位置，颜色，纹理坐标，不过不能用来创建新的顶点坐标。
     private final String vertexShaderCode =
             // This matrix member variable provides a hook to manipulate
             // the coordinates of the objects that use this vertex shader
@@ -40,7 +45,7 @@ public class Triangle {
     // Use to access and set the view transformation
     private int mMVPMatrixHandle;
 
-
+    // 片段着色器（Fragment Shader ) 用于呈现与颜色或纹理的形状的面的OpenGL ES代码。
     private final String fragmentShaderCode =
             "precision mediump float;" +
                     "uniform vec4 vColor;" +
@@ -67,10 +72,10 @@ public class Triangle {
     public Triangle() {
         // initialize vertex byte buffer for shape coordinates 为形状坐标初始化顶点字节缓冲区 length*4是因为一个float占四个字节
         ByteBuffer bb = ByteBuffer.allocateDirect(triangleCoords.length * 4);
-        // use the device hardware's native byte order
+        // use the device hardware's native byte order 数组排列用nativeOrder
         bb.order(ByteOrder.nativeOrder());
 
-        // create a floating point buffer from the ByteBuffer 使用设备硬件的本机字节顺序
+        // create a floating point buffer from the ByteBuffer 从ByteBuffer创建一个浮点缓冲区
         vertexBuffer = bb.asFloatBuffer();
 
         // add the coordinates to the FloatBuffer 将坐标添加到FloatBuffer
@@ -79,10 +84,12 @@ public class Triangle {
         // set the buffer to read the first coordinate 设置缓冲区以读取第一个坐标
         vertexBuffer.position(0);
 
+        // 这里有一点需要注意，因为着色器的代码执行很昂贵，所以避免多次执行，需要我们一般将执行代码的逻辑写带图形类的构造方法中。
         int vertexShader = OpenGLES20Activity.MyGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
         int fragmentShader = OpenGLES20Activity.MyGLRenderer.loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
         Log.d("qiaopc", " vertexShader:" + vertexShader + " fragmentShader:" + fragmentShader);
         // create empty OpenGL ES Program 创建空的OpenGL ES程序
+        // 项目（Program） -包含要用于绘制一个或多个形状着色器的OpenGL ES的对象。
         mProgram = GLES20.glCreateProgram();
 
         // add the vertex shader to program 将顶点着色器添加到程序中
@@ -128,7 +135,7 @@ public class Triangle {
         // Disable vertex array 禁用顶点数组
         GLES20.glDisableVertexAttribArray(mPositionHandle);
 
-        // get handle to shape's transformation matrix 掌握形状的变换矩阵
+        // get handle to shape's transformation matrix 得到形状的变换矩阵的句柄
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
 
         // Pass the projection and view transformation to the shader 将投影和视图转换传递给着色器

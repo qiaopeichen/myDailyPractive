@@ -106,6 +106,7 @@ public class OpenGLES20Activity extends AppCompatActivity {
             mAngle = angle;
         }
 
+        // 上面我们创建了着色器的编译代码，代码编写完成，需要写个方法来执行这段代码，这里我们在渲染器中写一个如下方法来执行着色器代码
         public static int loadShader(int type, String shaderCode) {
 
             // create a vertex shader type (GLES20.GL_VERTEX_SHADER) 创建顶点着色器类型（GLES20.GL_VERTEX_SHADER）
@@ -139,11 +140,24 @@ public class OpenGLES20Activity extends AppCompatActivity {
             // Redraw background color
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            // Set the camera position (View matrix)
-            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 1.0f);
+            // Set the camera position (View matrix) // 定义一个相机视图
+            Matrix.setLookAtM(mViewMatrix, // 接收相机变换矩阵
+                    0, // 变换矩阵的起始位置（偏移量）
+                    0, 0, -3, // 相机位置
+                    0f, 0f, 0f, // 观察点位置
+                    0f, 1f, 1.0f); // up向量在xyz上的分量
 
             // Calculate the projection and view transformation 计算投影和视图转换
-            Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+            // 转换矩阵用来做什么的呢？是否记得上面我们绘制的图形坐标需要转换为OpenGl中能处理的小端字节序（LittleEdian），
+            // 没错，转换矩阵就是用来将数据转为OpenGl ES可用的数据字节，
+            // 我们将相机视图和投影设置的数据相乘，便得到一个转换矩阵，然后我们再将此矩阵传给顶点着色器
+            Matrix.multiplyMM(mMVPMatrix, // 接收相乘结果
+                    0, // 接收矩阵的起始位置
+                    mProjectionMatrix, // 左矩阵
+                    0, // 左矩阵的起始位置（偏移量）
+                    mViewMatrix, // 右矩阵
+                    0); // 右矩阵的起始位置（偏移量）
+            // 将两个4x4矩阵相乘并将结果存储在第三个4x4中
 
             // Create a rotation transformation for the triangle 为三角形创建旋转变换
             long time = SystemClock.uptimeMillis() % 4000L;
@@ -171,6 +185,7 @@ public class OpenGLES20Activity extends AppCompatActivity {
 
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
+            // 设置视图展示窗口
             GLES20.glViewport(0, 0, width, height);
 
             float ratio = (float) width / height;
